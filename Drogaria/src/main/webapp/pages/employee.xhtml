@@ -1,0 +1,94 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:h="http://xmlns.jcp.org/jsf/html"
+	  xmlns:f="http://xmlns.jcp.org/jsf/core"
+	  xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	  xmlns:p="http://primefaces.org/ui"
+	  template="/templates/template.xhtml">
+
+<ui:define name="init">
+	<f:metadata>
+		<f:viewAction action="#{employeeBean.init}"/>
+	</f:metadata>
+</ui:define>
+
+<ui:define name="title">Employees</ui:define>
+<ui:define name="content">
+	
+		<h:form id="formEmployee">
+			<p:panel header="List of Employee">
+				<p:dataTable id="dataEmployee" value="#{employeeBean.employees}" var="e" emptyMessage="Not record found" paginator="true" rows="5">
+					<p:column headerText="Name" filterBy="#{e.person.name}" sortBy="#{e.person.name}">
+						<h:outputText value="#{e.person.name}"/>
+					</p:column>
+					<p:column headerText="CPF">
+						<h:outputText value="#{e.person.cpf}"/>
+					</p:column>
+					<p:column headerText="Admission Date:">
+						<h:outputText value="#{e.dateAdmission}">
+							<f:convertDateTime locale="pt_BR"/>
+						</h:outputText>
+					</p:column>
+					<p:column headerText="Options">
+						<p:commandButton value="Update" icon="fa fa-fw fa-edit" oncomplete="PF('dlgEmployee').show();" actionListener="#{employeeBean.update(e)}"
+										 update="formEmployeeDlg:pnlEmployee">
+							<f:actionListener type="org.omnifaces.eventlistener.ResetInputAjaxActionListener"/>
+						</p:commandButton>
+						<p:commandButton value="Delete" icon="fa fa-fw fa-remove" update="dataEmployee message" actionListener="#{employeeBean.delete(e)}">
+							<p:confirm header="Confirm" message="Are you sure you want to delete?" icon="ui-icon-alert"/>
+						</p:commandButton>
+					</p:column>
+					
+					<f:facet name="footer">
+						<p:commandButton value="New" icon="fa fa-fw fa-save" oncomplete="PF('dlgEmployee').show();" actionListener="#{employeeBean.preparedEmployee}" update="formEmployeeDlg:pnlEmployee">
+							<f:actionListener type="org.omnifaces.eventlistener.ResetInputAjaxActionListener"/>
+						</p:commandButton>
+					</f:facet>
+				</p:dataTable>
+				<p:confirmDialog global="true">
+					<p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="fa fa-fw fa-check-square" /> 
+			        <p:commandButton value="No"  type="button" styleClass="ui-confirmdialog-no"  icon="fa fa-fw  fa-close" />
+				</p:confirmDialog>
+				
+			</p:panel>
+		</h:form>
+		
+		<p:dialog header="Registration - Employee" draggable="false" resizable="false" modal="true" widgetVar="dlgEmployee" closable="false">
+			<h:form id="formEmployeeDlg">
+				<h:panelGrid id="pnlEmployee" columns="2">
+					<p:outputLabel value="Person: "/>
+					<p:selectOneMenu value="#{employeeBean.employee.person}" filter="true" converter="omnifaces.SelectItemsConverter" required="true">
+						<f:selectItem itemLabel="Select a Person" noSelectionOption="true"/>
+						<f:selectItems value="#{employeeBean.persons}" var="p" itemLabel="#{p.name}" itemValue="#{p}"/>
+					</p:selectOneMenu>
+					<p:outputLabel value="Admission Date: "/>
+					<p:calendar value="#{employeeBean.employee.dateAdmission}" showOn="button" locale="pt_BR" required="true"/>
+					<p:outputLabel value="Work Card "/>
+					<p:inputMask mask="99.9999-99" value="#{employeeBean.employee.workCard}" required="true"/>
+				</h:panelGrid>
+				
+				<h:panelGrid columns="2">
+					<p:commandButton value="Save" actionListener="#{employeeBean.save}" update="formEmployee:dataEmployee message pnlEmployee"/>
+					<p:commandButton value="Close" onclick="PF('dlgEmployee').hide();"/>
+				</h:panelGrid>
+			</h:form>
+		</p:dialog>
+		
+		<h:outputScript library="js" name="calendar-brazilian.js"/>
+	</ui:define>
+</ui:composition>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

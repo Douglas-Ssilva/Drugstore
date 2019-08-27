@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.9.0.final using JasperReports Library version 6.9.0-cb8f9004be492ccc537180b49c026951f4220bf3  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="produtos" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="dcb94115-f848-4d32-b604-20ff3d7b4da8">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Drugstore Data Adapter"/>
+	<parameter name="PRODUTO_NOME" class="java.lang.String"/>
+	<parameter name="FABRICANTE_NOME" class="java.lang.String"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT drogaria_full.product.name AS pname,
+	drogaria_full.product.price,
+	drogaria_full.product.quantity,
+	drogaria_full.factory.name AS fname
+FROM drogaria_full.product
+	INNER JOIN drogaria_full.factory ON 
+	 drogaria_full.product.factory_id = drogaria_full.factory.id 
+WHERE 
+	 drogaria_full.product.name LIKE $P{PRODUTO_NOME} 
+	 AND drogaria_full.factory.name LIKE $P{FABRICANTE_NOME} 
+ORDER BY drogaria_full.product.name ASC,
+	drogaria_full.factory.name ASC]]>
+	</queryString>
+	<field name="pname" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="pname"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="product"/>
+	</field>
+	<field name="price" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="price"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="product"/>
+	</field>
+	<field name="quantity" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="quantity"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="product"/>
+	</field>
+	<field name="fname" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="fname"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="factory"/>
+	</field>
+	<title>
+		<band height="79" splitType="Stretch">
+			<image hAlign="Center">
+				<reportElement x="-5" y="10" width="550" height="56" uuid="b8a0c29e-e47a-459e-ab70-ee38245b9de0"/>
+				<imageExpression><![CDATA["logoo.png"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="61" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="550" height="30" uuid="ae5bddd0-bb24-44d3-986c-86bb162fd0d6"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Relatório de Produtos]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="50" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="100" height="30" uuid="ffd2ad66-e8fe-4b17-9bd1-498c730527fa">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="f559d4e5-3d37-42d7-a56b-c136818fe75c"/>
+				</reportElement>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nome]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="120" y="0" width="100" height="30" uuid="c4bca36d-e88e-4ccd-b135-323af54496b2">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="1fb2ca7b-19ac-482e-b34e-5ff350c9c09b"/>
+				</reportElement>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Preço]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="240" y="0" width="100" height="30" uuid="c90c7bd7-dc24-4aaf-949e-b64d6bd303f0">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="b02e43e6-1645-4e6b-9c70-637f878d2ca7"/>
+				</reportElement>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Quantidade]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="380" y="0" width="100" height="30" uuid="9d91dc67-cd79-4de2-8821-a07b79770c0a">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="8416043a-c0cf-49e8-b25e-99677e4abcb0"/>
+				</reportElement>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fabricante]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="30" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="100" height="30" uuid="ab9013fc-1aed-4666-9fc9-f32148b24990">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="f559d4e5-3d37-42d7-a56b-c136818fe75c"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{pname}]]></textFieldExpression>
+			</textField>
+			<textField pattern="0.00">
+				<reportElement x="120" y="0" width="100" height="30" uuid="2882f0ef-e101-4a80-abbb-c44d242b21e2">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="1fb2ca7b-19ac-482e-b34e-5ff350c9c09b"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{price}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="240" y="0" width="100" height="30" uuid="96e3a62c-563a-479d-9a3e-74eebba3e312">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="b02e43e6-1645-4e6b-9c70-637f878d2ca7"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{quantity}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="380" y="0" width="100" height="30" uuid="7ddf7a81-1a06-40a6-9a4a-800299a3a333">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="8416043a-c0cf-49e8-b25e-99677e4abcb0"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{fname}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="60" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="30" width="550" height="30" uuid="0d9462b6-01cb-44cf-abc1-08e0d462d0ca"/>
+				<box>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ Rua Viena, 825, Granjas Primavera]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+</jasperReport>

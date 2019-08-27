@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.9.0.final using JasperReports Library version 6.9.0-cb8f9004be492ccc537180b49c026951f4220bf3  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="states" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="b2ad4140-bad3-43f0-bcb5-4d2f78c8d037">
+	<property name="com.jaspersoft.studio.data.sql.tables">
+		<![CDATA[ZHJvZ2FyaWFfZnVsbC5zdGF0ZSBBUyAsMTU1LDExOCw2OGYzYTJiOC01ODllLTRmN2MtOTUyZC03
+YTk0ODkzMWYyYzM7]]>
+	</property>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Drugstore Data Adapter"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT drogaria_full.state.name,
+	drogaria_full.state.initials
+FROM drogaria_full.state
+ORDER BY drogaria_full.state.name ASC]]>
+	</queryString>
+	<field name="name" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="name"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="state"/>
+	</field>
+	<field name="initials" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="initials"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="state"/>
+	</field>
+	<title>
+		<band height="82" splitType="Stretch">
+			<image hAlign="Center">
+				<reportElement x="0" y="0" width="541" height="50" uuid="74698c8a-d614-428b-abaa-7d62bfdec29d"/>
+				<imageExpression><![CDATA["logoo.png"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="46" splitType="Stretch">
+			<staticText>
+				<reportElement x="7" y="10" width="541" height="36" uuid="2f9b4bbc-37b5-4f94-96f9-443b968a8c4c"/>
+				<textElement textAlignment="Center" markup="none">
+					<font size="14" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Relatório de Estados]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch">
+			<staticText>
+				<reportElement x="10" y="10" width="100" height="30" uuid="2da7d5e6-036e-48e1-8022-264bca261bb9">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="16465671-9d8c-4fa5-9811-f6fc6ce0b1d4"/>
+				</reportElement>
+				<textElement textAlignment="Left">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nome]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="190" y="10" width="100" height="30" uuid="5eb54810-18d8-43e8-8785-d3a45432fdae">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="a999fc33-2fe1-403d-b089-05922584fa79"/>
+				</reportElement>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Sigla]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="33" splitType="Stretch">
+			<textField>
+				<reportElement x="10" y="0" width="100" height="30" uuid="8cac6b88-0c24-469b-acfc-2eac77f6b5c7">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="16465671-9d8c-4fa5-9811-f6fc6ce0b1d4"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="193" y="3" width="100" height="30" uuid="3beb1a8a-da5e-4e7c-a3d9-e889fafda654">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="a999fc33-2fe1-403d-b089-05922584fa79"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{initials}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="70" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="30" width="550" height="30" uuid="861c83ca-f841-4bc3-af5a-cb9b42cd2072"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ Rua Viena, 825, Granjas Primavera]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+</jasperReport>

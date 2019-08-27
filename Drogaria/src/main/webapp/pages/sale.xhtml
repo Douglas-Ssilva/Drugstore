@@ -1,0 +1,124 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:h="http://xmlns.jcp.org/jsf/html"
+	  xmlns:f="http://xmlns.jcp.org/jsf/core"
+	  xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	  xmlns:p="http://primefaces.org/ui"
+	  template="/templates/template.xhtml">
+	  
+	  
+<ui:define name="title">Sales</ui:define>	  
+<ui:define name="content">
+	<h:form id="formSale">
+		<p:panel header="Products">
+			<p:dataTable id="dataSale" widgetVar="dataSaleW" value="#{saleBean.products}" var="p" emptyMessage="Not record found" 
+						paginator="true" rows="4" paginatorPosition="bottom">
+				<p:column headerText="Descrição" filterBy="#{p.name}" sortBy="#{p.name}">
+					<h:outputText value="#{p.name}" />
+				</p:column>
+				<p:column headerText="Factory" filterBy="#{p.factory.name}" sortBy="#{p.factory.name}">
+					<h:outputText value="#{p.factory.name}" />
+				</p:column>
+				<p:column headerText="Price">
+					<h:outputText value="R$ "/>
+					<h:outputText value="#{p.price}">
+						<f:convertNumber locale="pt_BR" minFractionDigits="2"/>
+					</h:outputText>
+				</p:column>
+				<p:column headerText="Options">
+					     <p:commandButton icon="fa fa-cart-plus" actionListener="#{saleBean.addProductsToCart(p)}" update="formSale:dataShoppingCart message formSale:pnlSale"/>
+				</p:column>
+			</p:dataTable>
+		</p:panel>
+		<br/>
+		<br/>
+		
+		<p:panel header="Shopping Cart">
+			<p:dataTable id="dataShoppingCart" widgetVar="dataShoppingCartW" value="#{saleBean.sales}" var="s" emptyMessage="Not record found" 
+						paginator="true" rows="4" paginatorPosition="bottom">
+				<p:column headerText="Descrição">
+					<h:outputText value="#{s.product.name}" />
+				</p:column>
+				<p:column headerText="Factory">
+					<h:outputText value="#{s.product.factory.name}" />
+				</p:column>
+				<p:column headerText="Quantity">
+					<h:outputText value="#{s.quantity}" />
+				</p:column>
+				<p:column headerText="Unitary Value">
+					<h:outputText value="R$ "/>
+					<h:outputText value="#{s.partialValue}">
+						<f:convertNumber locale="pt_BR" minFractionDigits="2"/>
+					</h:outputText>
+				</p:column>
+				<p:column headerText="Options">
+					   <p:commandButton icon="fa fa-times" actionListener="#{saleBean.delete(s)}" update="dataShoppingCart message formSale:pnlSale"/>
+					   <p:commandButton icon="fa fa-trash" actionListener="#{saleBean.deleteAll(s)}" update="dataShoppingCart message formSale:pnlSale"/>
+				</p:column>
+			</p:dataTable>
+		
+		</p:panel>
+		<br/>
+		<br/>
+		
+		<div class="panel-finalize">
+			<h:panelGrid columns="3" id="pnlSale">
+				<h:outputText value="Amount: R$ " styleClass="font-finalize"/>
+				<h:outputText value="#{saleBean.sale.amount}" styleClass="font-finalize">
+					<f:convertNumber locale="pt_BR" minFractionDigits="2"/>
+				</h:outputText>
+				<p:commandButton value="Finalize" styleClass="butn" actionListener="#{saleBean.finalizeSale}" 
+									oncomplete="PF('dlgSale').show();" update="message formDlgSale:pnlSaleDlg ">
+					<f:actionListener type="org.omnifaces.eventlistener.ResetInputAjaxActionListener"/>					
+				</p:commandButton>
+			</h:panelGrid>
+		</div>
+		
+	</h:form>
+	
+	<p:dialog widgetVar="dlgSale" draggable="false" resizable="false" closable="false" modal="true" header="Finalize Sale" showEffect="explode">
+		<h:form id="formDlgSale"> 
+			<p:panelGrid id="pnlSaleDlg" columns="2"> 
+				<h:outputLabel value="Employee: " />
+				<p:selectOneMenu value="#{saleBean.sale.employee}" converter="omnifaces.SelectItemsConverter" filter="true" filterMatchMode="contains" required="true">
+					<f:selectItem noSelectionOption="true" itemLabel="Select a Employee"/>
+					<f:selectItems value="#{saleBean.employees}" var="e" itemValue="#{e}" itemLabel="#{e.person.name}"/> 
+				</p:selectOneMenu>
+				<h:outputLabel value="Client: " />
+				<p:selectOneMenu value="#{saleBean.sale.client}" converter="omnifaces.SelectItemsConverter" filter="true" filterMatchMode="contains"> <!-- VEnda a vista nao preciso de salvar o cliente -->
+					<f:selectItem noSelectionOption="true" itemLabel="Select a Client"/>
+					<f:selectItems value="#{saleBean.clients}" var="c" itemValue="#{c}" itemLabel="#{c.person.name}"/> 
+				</p:selectOneMenu>
+				<h:outputLabel value="Amount: R$ " />
+				<h:outputText value="#{saleBean.sale.amount}">
+					<f:convertNumber locale="pt_BR" minFractionDigits="2"/>
+				</h:outputText>
+				<h:outputLabel value="Date: " />
+				<h:outputLabel value="#{saleBean.sale.hour}">
+					<f:convertDateTime locale="pt_BR" pattern="dd/MM/yyyy HH:mm" timeZone="America/Sao_Paulo"/>
+				</h:outputLabel>
+			</p:panelGrid>
+			<h:panelGrid columns="2">
+				<p:commandButton value="Save" actionListener="#{saleBean.save}" update="message pnlSaleDlg formSale:dataShoppingCart formSale:pnlSale" 
+								 oncomplete="PF('dlgSale').hide();"/>
+				<p:commandButton value="Close" onclick="PF('dlgSale').hide();"/>
+			</h:panelGrid>
+		</h:form>
+	</p:dialog>
+	</ui:define>
+</ui:composition>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

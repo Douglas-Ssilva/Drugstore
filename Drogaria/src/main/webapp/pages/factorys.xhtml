@@ -1,0 +1,62 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:h="http://xmlns.jcp.org/jsf/html"
+	  xmlns:f="http://xmlns.jcp.org/jsf/core"
+	  xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	  xmlns:p="http://primefaces.org/ui"
+	  template="/templates/template.xhtml">
+	  
+<ui:define name="init">
+	<f:metadata>
+		<f:viewAction action="#{factoryBean.init}"/>
+	</f:metadata>
+</ui:define>
+
+<ui:define name="title">Factorys</ui:define>
+<ui:define name="content">
+		<h:form id="formFactory">
+			<p:panel header="List of Factorys">
+				<p:dataTable id="dataFactory" value="#{factoryBean.factorys}" var="fac" emptyMessage="Not record found" paginator="true" rows="5">
+					<p:column headerText="Name" filterBy="#{fac.name}" sortBy="#{fac.name}">
+						<h:outputText value="#{fac.name}"/>
+					</p:column>
+					<p:column headerText="Options">
+						<p:commandButton value="Update" icon="fa fa-fw fa-edit" oncomplete="PF('dlgFactory').show();"
+										 update="formFactoryDlg:pnlFactory">
+								<f:actionListener type="org.omnifaces.eventlistener.ResetInputAjaxActionListener"/>
+								<f:setPropertyActionListener value="#{fac}" target="#{factoryBean.factory}"/>
+						</p:commandButton>
+						<p:commandButton value="Delete" icon="fa fa-fw fa-remove" actionListener="#{factoryBean.delete(fac)}" update="dataFactory message">
+							<p:confirm header="Confirm" message="Are you sure you want to delete?" icon="ui-icon-alert"/>
+						</p:commandButton>
+					</p:column>
+					
+					<f:facet name="footer">
+						<p:commandButton value="New" oncomplete="PF('dlgFactory').show();" update="formFactoryDlg:pnlFactory" 
+								actionListener="#{factoryBean.clearFields}">
+							<f:actionListener type="org.omnifaces.eventlistener.ResetInputAjaxActionListener"/>
+						</p:commandButton>
+					</f:facet>
+				</p:dataTable>
+				
+				<p:confirmDialog global="true"> <!-- Toda ação de confirmação usará esse confirm -->
+					<p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="fa fa-fw fa-check-square" /> <!-- button só irá confirmar, nao submete -->
+			        <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="fa fa-fw  fa-close" />
+				</p:confirmDialog>
+			</p:panel>
+		</h:form>
+		
+		<p:dialog header="Registration - Factory" draggable="false" resizable="false" modal="true" widgetVar="dlgFactory" closable="false">
+			<h:form id="formFactoryDlg">
+				<h:panelGrid id="pnlFactory" columns="2">
+					<p:outputLabel value="Name: " for="nameFactory"/>
+					<p:inputText id="nameFactory" value="#{factoryBean.factory.name}" maxlength= "50" size="30" required="true" requiredMessage="Campo é obrigatório!"/>
+				</h:panelGrid>
+				
+				<h:panelGrid columns="2">
+					<p:commandButton value="Save" actionListener="#{factoryBean.save}" update="formFactory:dataFactory message pnlFactory"/>
+					<p:commandButton value="Close" onclick="PF('dlgFactory').hide();"/>
+				</h:panelGrid>
+			</h:form>
+		</p:dialog>
+	</ui:define>
+</ui:composition>

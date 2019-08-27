@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:h="http://xmlns.jcp.org/jsf/html"
+	  xmlns:f="http://xmlns.jcp.org/jsf/core"
+	  xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	  xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>Drugstore</title>
+	<link rel="shortcut icon" href="https://araujo.vteximg.com.br/arquivos/araujo-favicon.ico?v=635539940243500000"/>
+	<h:outputStylesheet library="css" name="style.css"/>
+</h:head>
+
+<h:body>
+	<div>
+		<ui:insert name="init"/>
+	</div>
+	
+	<p:growl id="message" life="3000"/>
+		
+	<p:ajaxStatus onstart="PF('dlgProgressBar').show();" onsuccess="PF('dlgProgressBar').hide();"/>
+	<p:dialog closable="false" resizable="false" draggable="false" showHeader="false" widgetVar="dlgProgressBar" modal="true">
+		<h:graphicImage library="img" name="spinner.gif" style="height: 100px;"/>
+	</p:dialog>
+
+	<div id="geral">
+		<div id="header" class="img-logo">
+			<p:graphicImage library="img" name="logo.PNG"/>
+		</div>
+		
+		<div id="cabecalho" class="div-cabecalho">
+		<h:form>
+			<p:menubar>
+				<p:submenu label="Files">
+					<p:menuitem value="file">
+					
+					</p:menuitem>
+				</p:submenu>
+				<p:submenu label="Registration">
+					<p:menuitem value="State" url="../pages/states.xhtml"/>
+					<p:menuitem value="City"  url="../pages/citys.xhtml"/>
+					<p:menuitem value="Factory"  url="../pages/factorys.xhtml"/>
+					<p:menuitem value="Product"  url="../pages/products.xhtml"/>
+					<p:menuitem value="Person"  url="../pages/person.xhtml"/>
+					<p:menuitem value="Client"  url="../pages/clients.xhtml"/>
+					<p:menuitem value="Employee"  url="../pages/employee.xhtml"/>
+				</p:submenu>
+				<p:submenu label="Movement">
+					<p:menuitem value="Sales"/>
+				
+				</p:submenu>
+				<p:submenu label="Help">
+					<p:menuitem value="About"/>
+				
+				</p:submenu>
+			</p:menubar>
+		</h:form>	
+		</div>
+		
+		<h1><ui:insert name="title"/></h1>	
+		
+		<div id="content">
+			<ui:insert name="content"/>
+		</div>
+	</div>
+</h:body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
