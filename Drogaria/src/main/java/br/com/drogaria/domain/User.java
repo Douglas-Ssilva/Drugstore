@@ -14,6 +14,9 @@ public class User extends GenericDomain{
 	@Column(nullable= false, length= 32) //usando MD5 a fim de criptografar a senha
 	private String password;
 	
+	@Transient //Servirá apenas p usuário nao se assustar quando criptografarmos a sua senha
+	private String unencryptePassword;
+	
 	@Column(nullable= false)
 	private Character typeUser;
 	
@@ -76,6 +79,15 @@ public class User extends GenericDomain{
 		}
 		return typePerson;
 	}
+
+	public String getUnencryptePassword() {
+		return unencryptePassword;
+	}
+
+	public void setUnencryptePassword(String unencryptePassword) {
+		this.unencryptePassword = unencryptePassword;
+	}
+
 }
 
 

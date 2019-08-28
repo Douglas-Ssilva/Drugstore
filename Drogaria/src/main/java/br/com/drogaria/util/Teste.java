@@ -1,27 +1,24 @@
 package br.com.drogaria.util;
 
 import java.math.BigDecimal;
-import java.sql.Connection;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.Date;
 
+import org.apache.shiro.crypto.hash.SimpleHash;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.omnifaces.util.Faces;
-import org.omnifaces.util.Messages;
 
+import br.com.drogaria.dao.CashRegisterDAO;
 import br.com.drogaria.dao.CityDAO;
 import br.com.drogaria.dao.ClientDAO;
 import br.com.drogaria.dao.FactoryDAO;
 import br.com.drogaria.dao.JPAUtil;
 import br.com.drogaria.dao.PersonDAO;
 import br.com.drogaria.dao.ProductDAO;
-import br.com.drogaria.dao.SingleConnection;
 import br.com.drogaria.dao.StateDAO;
 import br.com.drogaria.dao.UserDAO;
+import br.com.drogaria.domain.CashRegister;
 import br.com.drogaria.domain.City;
 import br.com.drogaria.domain.Client;
 import br.com.drogaria.domain.Factory;
@@ -29,10 +26,6 @@ import br.com.drogaria.domain.Person;
 import br.com.drogaria.domain.Product;
 import br.com.drogaria.domain.State;
 import br.com.drogaria.domain.User;
-import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JasperFillManager;
-import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.engine.JasperPrintManager;
 
 public class Teste {
 
@@ -79,11 +72,16 @@ public class Teste {
 	}
 
 	@Test
-	public void testandoList() {
-		List<City> list = new CityDAO().getAll();
-		for (City city : list) {
-			System.out.println(city.getState().getName());
-		}
+	public void testandoList() throws ParseException {
+//		CashRegister cashRegisterByDate = new CashRegisterDAO().getCashRegisterByDate(new SimpleDateFormat("dd/MM/yyyy").parse("15/09/2019"));
+//		System.out.println(cashRegisterByDate);
+		
+		
+		User user= new UserDAO().authentication("111.111.111-11", "admin"); //admin
+		System.out.println(user.getPerson().getName());
+//		SimpleHash simpleHash = new SimpleHash("md5", user.getPassword());
+//		user.setPassword(simpleHash.toHex());
+//		new UserDAO().merge(user);
 	}
 
 	@Test

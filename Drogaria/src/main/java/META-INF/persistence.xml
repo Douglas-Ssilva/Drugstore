@@ -19,6 +19,8 @@
 		<class>br.com.drogaria.domain.Sale</class>
 		<class>br.com.drogaria.domain.ItemSale</class>
 		<class>br.com.drogaria.domain.History</class>
+		<class>br.com.drogaria.domain.CashRegister</class>
+		<class>br.com.drogaria.domain.MovementCashRegister</class>
    
 
 		<properties>

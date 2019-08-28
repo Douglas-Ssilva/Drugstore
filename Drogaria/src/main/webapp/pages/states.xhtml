@@ -47,11 +47,15 @@
 		<h:form id="formStatesDlg">
 			<h:panelGrid id="pnlState" columns="2">
 				<p:outputLabel value="Name: " for="nameState"/>
-				<p:inputText id="nameState" value="#{stateBean.state.name}" maxlength="50" size="30" required="true" requiredMessage="Campo é obrigatório!"/>
+				<p:inputText id="nameState" value="#{stateBean.state.name}" maxlength="50" size="30" converter="upperCaseConverter"
+							  required="true" requiredMessage="Campo é obrigatório!">
+						<p:ajax event="blur" update="nameState"/>			  
+				</p:inputText>
 				
 				<p:outputLabel value="Initials: " for="initialsState"/>
-				<p:inputText id="initialsState" value="#{stateBean.state.initials}"  size="10" maxlength="2" required="true" requiredMessage="Campo é obrigatório!">
-					<f:ajax execute="@this" render="@this" listener="#{stateBean.toUpperCase}" event="keyup" delay="200"/>
+				<p:inputText id="initialsState" value="#{stateBean.state.initials}"  size="10" maxlength="2" converter="upperCaseConverter"
+							 required="true" requiredMessage="Campo é obrigatório!">
+							 <p:ajax event="blur" update="@this"/>
 				</p:inputText>
 			</h:panelGrid>
 			<h:panelGrid columns="2">

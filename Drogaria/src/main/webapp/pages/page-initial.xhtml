@@ -8,6 +8,21 @@
 <ui:define name="title">Page Initial</ui:define>
 <ui:define name="content">
 	<h:outputText value="Bem vindo, ao Sistema de Drogaria" />
-
+	<div>
+		<h:form>
+		 	<p:dialog id="dlg" showEffect="explode" visible="true" header="Authentication" resizable="false" modal="true" draggable="false" closable="false">
+			<p:messages id="messageAuthentication" closable="true"/>
+		 		<p:panelGrid id="pnlAuthentication" columns="2">
+		 			<p:outputLabel value="CPF" for="cpf"/>
+		 			<p:inputMask value="#{userAuthenticationBean.user.person.cpf}" mask="999.999.999-99" id="cpf" required="true" requiredMessage="Campo é obrigatório"/>
+		 			<p:outputLabel value="Password" for="pass"/>
+		 			<p:password value="#{userAuthenticationBean.user.password}" feedback="true" id="pass" required="true" requiredMessage="Campo é obrigatório"/>
+		 		</p:panelGrid>
+		 		<h:panelGrid>
+		 			<p:commandButton value="Sign In" update="messageAuthentication" actionListener="#{userAuthenticationBean.logar}"/>
+		 		</h:panelGrid>
+		 	</p:dialog>
+	 	</h:form>
+	</div>
 </ui:define>
 </ui:composition>
