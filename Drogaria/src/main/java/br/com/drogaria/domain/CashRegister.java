@@ -5,6 +5,8 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -22,6 +24,10 @@ public class CashRegister extends GenericDomain { //Controla abertura e fechamen
 	
 	@Column(nullable= false, precision= 7, scale= 2)
 	private BigDecimal valueOpening;
+	
+	@ManyToOne
+	@JoinColumn(nullable= false)
+	private User user;
 	
 	
 	public Date getOpeningDate() {
@@ -41,5 +47,11 @@ public class CashRegister extends GenericDomain { //Controla abertura e fechamen
 	}
 	public void setValueInput(BigDecimal valueInput) {
 		this.valueOpening = valueInput;
+	}
+	public User getUser() {
+		return user;
+	}
+	public void setUser(User user) {
+		this.user = user;
 	}
 }

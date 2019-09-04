@@ -47,11 +47,18 @@ public class FactoryServices {
 		return jsonFactory;
 	}
 	
+	//{"id": 106 } no body
 	@DELETE
-	public void delete(String json) {
-		Gson gson= new Gson();
-		Factory factory = gson.fromJson(json, Factory.class);
-		new FactoryDAO().delete(factory);
+	@Path("{id}")
+	public boolean delete(@PathParam("id") Long id) {
+		System.out.println("Deletando factory");
+		FactoryDAO factoryDAO = new FactoryDAO();
+		Factory factory = factoryDAO.findById(id);
+		if(factory != null) {
+			factoryDAO.delete(factory);
+			return true;
+		}
+		return false;
 	}
 	
 	

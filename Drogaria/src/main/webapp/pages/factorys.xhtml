@@ -15,11 +15,11 @@
 <ui:define name="content">
 		<h:form id="formFactory">
 			<p:panel header="List of Factorys">
-				<p:dataTable id="dataFactory" value="#{factoryBean.factorys}" var="fac" emptyMessage="Not record found" paginator="true" rows="5">
+				<p:dataTable id="dataFactory" value="#{factoryBean.factorys}" var="fac" emptyMessage="Not record found" paginator="true" rows="5" paginatorPosition="bottom">
 					<p:column headerText="Name" filterBy="#{fac.name}" sortBy="#{fac.name}">
 						<h:outputText value="#{fac.name}"/>
 					</p:column>
-					<p:column headerText="Options">
+					<p:column headerText="Options" style="width: 15%;">
 						<p:commandButton value="Update" icon="fa fa-fw fa-edit" oncomplete="PF('dlgFactory').show();"
 										 update="formFactoryDlg:pnlFactory">
 								<f:actionListener type="org.omnifaces.eventlistener.ResetInputAjaxActionListener"/>

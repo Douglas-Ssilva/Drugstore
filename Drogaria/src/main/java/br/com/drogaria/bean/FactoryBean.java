@@ -50,6 +50,7 @@ public class FactoryBean implements Serializable {
 	public void save() {
 		try {
 //			dao.merge(factory);
+			System.out.println("Chamando save");
 			Client client= ClientBuilder.newClient();
 			WebTarget webTarget = client.target("http://127.0.0.1:8080/Drogaria/rest/factory");
 			webTarget.request().post(Entity.json(new Gson().toJson(factory)));
@@ -65,7 +66,12 @@ public class FactoryBean implements Serializable {
 	
 	public void delete(Factory f) {
 		try {
-			dao.delete(f);
+//			dao.delete(f);
+			System.out.println("Deletando");
+			Client client = ClientBuilder.newClient();
+			WebTarget webTarget = client.target("http://127.0.0.1:8080/Drogaria/rest/factory");
+			WebTarget webTarget2 = webTarget.path("{id}").resolveTemplateFromEncoded("id", f.getId()); //resolve converter " p um valor válido
+			webTarget2.request().delete();
 			init();
 			Messages.addGlobalInfo("Successfully");
 		} catch (RuntimeException e) {

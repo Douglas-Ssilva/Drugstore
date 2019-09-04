@@ -8,7 +8,7 @@ import org.glassfish.jersey.server.ResourceConfig;
 public class ResourceConfigDrugstore extends ResourceConfig{
 	
 	public ResourceConfigDrugstore() {
-		packages(" br.com.drogaria.services"); //passando o caminho onde estão meus services
+		packages("br.com.drogaria.services"); //passando o caminho onde estão meus services
 	}
 
 }

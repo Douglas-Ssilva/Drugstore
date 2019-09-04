@@ -7,6 +7,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
+import org.apache.shiro.crypto.hash.SimpleHash;
 import org.omnifaces.util.Messages;
 import org.primefaces.PrimeFaces;
 import org.primefaces.component.datatable.DataTable;
@@ -38,6 +39,8 @@ public class UserBean implements Serializable {
 	
 	public void save() {
 		try {
+			SimpleHash simpleHash = new SimpleHash("md5", user.getPassword());
+			user.setPassword(simpleHash.toHex());
 			dao.merge(user);
 			init();
 			verifyIfUpdate(user);
