@@ -44,13 +44,14 @@
 					<p:menuitem value="Product"  url="../pages/products.xhtml"/>
 					<p:menuitem value="Person"  url="../pages/person.xhtml"/>
 					<p:menuitem value="Client"  url="../pages/clients.xhtml"/>
+					<p:menuitem value="Sale"  url="../pages/sale.xhtml"/>
 					<p:menuitem value="Employee"  url="../pages/employee.xhtml"/>
 					<p:menuitem value="User"  url="../pages/user.xhtml"/>
 				</p:submenu>
 				<p:submenu label="Movement">
 					<p:menuitem value="Sale With Item"  url="../pages/sale-with-item.xhtml"/>
 				</p:submenu>
-				<p:submenu label="Help" rendered="#{userAuthenticationBean.havePermissions(['A'])}">
+				<p:submenu label="Help" rendered="#{userAuthenticationBean.user.typeUserEnum.toString().equals('Administrator')}">
 					<p:menuitem value="About"/>
 				
 				</p:submenu>

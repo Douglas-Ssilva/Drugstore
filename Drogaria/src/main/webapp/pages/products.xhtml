@@ -32,13 +32,20 @@
 						<f:convertNumber locale="pt_BR" minFractionDigits="2"/><!-- 2 digitos pós vírgula -->
 					</h:outputText>
 				</p:column>
+				<!-- Em caso de edição ele pode mostrar imagens antigas -->
+				<p:column headerText="Photo">
+					<p:graphicImage cache="false" height="60" width="70" url="http://127.0.0.1:8080/upload/#{p.id}.png"/>
+				</p:column>
 				<p:column headerText="Options">
-					<p:commandButton value="Update" icon="fa fa-fw fa-edit" oncomplete="PF('dlgProduct').show();" actionListener="#{productBean.update(p)}"
+					<p:commandButton  icon="fa fa-fw fa-edit" oncomplete="PF('dlgProduct').show();" actionListener="#{productBean.update(p)}"
 									 update="formProductDlg:pnlProduct">
 						<f:actionListener type="org.omnifaces.eventlistener.ResetInputAjaxActionListener"/>
 					</p:commandButton>
-					<p:commandButton value="Delete" icon="fa fa-fw fa-remove" update="dataProduct message" actionListener="#{productBean.delete(p)}">
+					<p:commandButton  icon="fa fa-fw fa-remove" update="dataProduct message" actionListener="#{productBean.delete(p)}">
 						<p:confirm header="Confirm" message="Are you sure you want to delete?" icon="ui-icon-alert"/>
+					</p:commandButton>
+					<p:commandButton icon="ui-icon-arrowthick-1-s" ajax="false" actionListener="#{productBean.mountPhoto(p)}">
+						<p:fileDownload value="#{productBean.streamedContent}"/>
 					</p:commandButton>
 				</p:column>
 				
@@ -82,7 +89,7 @@
 				</p:fileUpload>
 				
 				<p:outputLabel value="Photo: " />
-				<p:graphicImage id="photoUpdate" value="#{productImageBean.streamedContent}" style="width: 250px; height: 200px;">
+				<p:graphicImage id="photoUpdate" value="#{productImageBean.streamedContent}" width="250" height="200">
 					   <f:param name="wayImage" value="#{productBean.product.wayImage}"/>	
 				</p:graphicImage>
 				

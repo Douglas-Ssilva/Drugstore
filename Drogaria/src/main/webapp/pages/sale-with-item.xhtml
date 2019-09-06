@@ -16,6 +16,9 @@
 	<h:form id="formSaleItem">
 			<p:dataTable id="dataSaleItem" value="#{saleWithItemBean.sales}" var="s" emptyMessage="Not record found" 
 						paginator="true" rows="6" paginatorPosition="bottom">
+				<p:column style="width: 16px;">
+					<p:rowToggler/>
+				</p:column>
 				<p:column headerText="Employee">
 					<h:outputText value="#{s.employee.person.name}" />
 				</p:column>
@@ -33,10 +36,35 @@
 						<f:convertDateTime locale="pt_BR" timeZone="America/Sao_Paulo" pattern="dd/MM/yyyy HH:mm"/>
 					</h:outputText>
 				</p:column>
+				
+				<p:rowExpansion>
+					<p:dataTable value="#{s.items}" var="i" emptyMessage="Não há items dessa venda">
+						<p:column headerText="Product">
+							<h:outputText value="#{i.product.name}" />
+						</p:column>
+						<p:column headerText="Quantity">
+							<h:outputText value="#{i.quantity}" />
+						</p:column>
+						<p:column headerText="Price Partial">
+							<h:outputText value="R$ "/>
+							<h:outputText value="#{i.partialValue}">
+								<f:convertNumber minFractionDigits="2" locale="pt_BR"/>
+							</h:outputText>
+						</p:column>
+					</p:dataTable>
+				</p:rowExpansion>
+				
 			</p:dataTable>
 	</h:form>
 	</ui:define>
 </ui:composition>
+
+
+
+
+
+
+
 
 
 

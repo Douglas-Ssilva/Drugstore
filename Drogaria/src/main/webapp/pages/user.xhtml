@@ -14,22 +14,22 @@
 <ui:define name="content">
 	
 	<h:form id="formUser">
-		<p:panel header="List of User">
+		<p:panel header="#{msg.headerPanel}">
 			<p:dataTable id="dataUser" widgetVar="dataUserW" value="#{userBean.users}" var="u" emptyMessage="Not record found" paginator="true" rows="5">
-				<p:column headerText="Name" filterBy="#{u.person.name}" sortBy="#{u.person.name}">
+				<p:column headerText="#{msg.columnName}" filterBy="#{u.person.name}" sortBy="#{u.person.name}">
 					<h:outputText value="#{u.person.name}"/>
 				</p:column>
-				<p:column headerText="CPF">
+				<p:column headerText="#{msg.columCpf}">
 					<h:outputText value="#{u.person.cpf}"/>
 				</p:column>
-				<p:column headerText="Released" filterBy="#{u.releasedFormat}" sortBy="#{u.releasedFormat}">
+				<p:column headerText="#{msg.columnReleased}" filterBy="#{u.releasedFormat}" sortBy="#{u.releasedFormat}">
 <!-- 					<p:selectBooleanCheckbox value="#{u.active}"/> -->
 							<h:outputText value="#{u.releasedFormat}"/>
 				</p:column>
-				<p:column headerText="Type Person">
-					<h:outputText value="#{u.typePersonFormat}"/>
+				<p:column headerText="#{msg.columnTypePerson}">
+					<h:outputText value="#{u.typeUserEnum.toString()}"/>
 				</p:column>
-				<p:column headerText="Options">
+				<p:column headerText="#{msg.columnTypePerson}">
 					<p:commandButton value="Update" icon="fa fa-fw fa-edit" oncomplete="PF('dlgUser').show();" actionListener="#{userBean.update(u)}" update="formUserDlg:pnlUser">
 						<f:actionListener type="org.omnifaces.eventlistener.ResetInputAjaxActionListener"/>
 					</p:commandButton>
@@ -39,7 +39,7 @@
 				</p:column>
 				
 				<f:facet name="footer">
-					<p:commandButton value="New" oncomplete="PF('dlgUser').show();" update="formUserDlg:pnlUser" actionListener="#{userBean.addUser}">
+					<p:commandButton value="#{msg.buttonNew}" oncomplete="PF('dlgUser').show();" update="formUserDlg:pnlUser" actionListener="#{userBean.addUser}">
 						<f:actionListener type="org.omnifaces.eventlistener.ResetInputAjaxActionListener"/>
 					</p:commandButton>
 				</f:facet>
@@ -65,10 +65,11 @@
 					<f:validateLength minimum="5"/>
 				</p:password>
 				<p:outputLabel value="Type Person: "/>
-				<p:selectOneRadio value="#{userBean.user.typeUser}" required="true" requiredMessage="Campo obrigatório" >
-					<f:selectItem itemValue="A" itemLabel="Administrador"/>
-					<f:selectItem itemValue="M" itemLabel="Manager"/>
-					<f:selectItem itemValue="E" itemLabel="Employee"/>
+				<p:selectOneRadio value="#{userBean.user.typeUserEnum}" required="true" requiredMessage="Campo obrigatório" >
+					<f:selectItem noSelectionOption="true" itemLabel="Selecione o tipo"/>
+					<f:selectItem itemValue="ADMINISTRATOR" itemLabel="Administrador"/>
+					<f:selectItem itemValue="MANAGER" itemLabel="Manager"/>
+					<f:selectItem itemValue="EMPLOYEE" itemLabel="Employee"/>
 				</p:selectOneRadio>
 				<p:outputLabel value="Released: "/>
 				<p:selectBooleanCheckbox value="#{userBean.user.active}" required="true" requiredMessage="Campo obrigatório"/>

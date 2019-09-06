@@ -2,13 +2,19 @@ package br.com.drogaria.domain;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 @Entity
 public class Sale extends GenericDomain{
@@ -28,6 +34,12 @@ public class Sale extends GenericDomain{
 	@ManyToOne
 	@JoinColumn(nullable= false)
 	private Employee employee;
+	
+	//Carregando os filhos com base no Pai
+	@OneToMany(fetch= FetchType.EAGER, mappedBy= "sale") // Padrão  é o lazy que nao carrega os filhos por padrão
+	@Fetch(FetchMode.SUBSELECT) //monte cada item com seu subselect
+	//precisa de setar o nome da Sale no ItemSale
+	private List<ItemSale> items;
 
 	public Date getHour() {
 		return hour;
@@ -59,5 +71,13 @@ public class Sale extends GenericDomain{
 
 	public void setEmployee(Employee employee) {
 		this.employee = employee;
+	}
+
+	public List<ItemSale> getItems() {
+		return items;
+	}
+
+	public void setItems(List<ItemSale> items) {
+		this.items = items;
 	}
 }

@@ -70,6 +70,7 @@ public class FactoryBean implements Serializable {
 			System.out.println("Deletando");
 			Client client = ClientBuilder.newClient();
 			WebTarget webTarget = client.target("http://127.0.0.1:8080/Drogaria/rest/factory");
+//			WebTarget webTarget = client.target("http://127.0.0.1:8080/Drogaria/rest/factory/{id}");
 			WebTarget webTarget2 = webTarget.path("{id}").resolveTemplateFromEncoded("id", f.getId()); //resolve converter " p um valor válido
 			webTarget2.request().delete();
 			init();

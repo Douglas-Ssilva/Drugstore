@@ -1,5 +1,7 @@
 package br.com.drogaria.bean;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.Serializable;
 import java.nio.file.Files;
@@ -18,6 +20,8 @@ import org.omnifaces.util.Faces;
 import org.omnifaces.util.Messages;
 import org.primefaces.component.datatable.DataTable;
 import org.primefaces.event.FileUploadEvent;
+import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.StreamedContent;
 import org.primefaces.model.UploadedFile;
 
 import br.com.drogaria.dao.FactoryDAO;
@@ -39,6 +43,7 @@ public class ProductBean implements Serializable {
 	private Product product;
 	private ProductDAO dao;
 	private FactoryDAO daoFactory;
+	private StreamedContent streamedContent;//serve p carregar arquivos
 
 	public void init() {
 		initAttributes();
@@ -101,6 +106,16 @@ public class ProductBean implements Serializable {
 		products = dao.getAll();
 		daoFactory = new FactoryDAO();
 	}
+	
+	public void mountPhoto(Product p) {
+		try {
+			FileInputStream fileInputStream = new FileInputStream("C:/Drugstore/img/" + p.getId() + ".png");
+			streamedContent= new DefaultStreamedContent(fileInputStream, "image/png", p.getId() + ".png");
+		} catch (RuntimeException | FileNotFoundException e) {
+			e.printStackTrace();
+			Messages.addGlobalError(e.getMessage());
+		}
+	}
 
 	public void upload(FileUploadEvent fileUploadEvent) {
 		UploadedFile uploadedFile = fileUploadEvent.getFile();
@@ -124,6 +139,7 @@ public class ProductBean implements Serializable {
 		SingleConnection singleConnection= new SingleConnection();
 		Connection connection = singleConnection.getConnection();
 		String wayMemory = Faces.getRealPath("/reports/produtos.jasper");// Descobrinco o endereço do relatório em memoria, visto que o jasper nao consegue ir no disco. Ominifaces
+		String wayBanner = Faces.getRealPath("/resources/img/logo.PNG"); //Descobrindo o caminho da imagem em runtime, evito assim problemas quando irei instalar a aplicação em otutros S.O
 		
 		//Extraindo filtros
 		DataTable dataTable= (DataTable) Faces.getViewRoot().findComponent("formProduct:dataProduct");
@@ -134,6 +150,7 @@ public class ProductBean implements Serializable {
 		Map<String, Object> params = new HashMap<>();
 		params.put("PRODUTO_NOME", "%%"); //sem preencher nada acarreta nullpointer
 		params.put("FABRICANTE_NOME", "%%");
+		params.put("WAY_BANNER", wayBanner);
 		
 		if(filterNameProduct != null) {
 			params.put("PRODUTO_NOME", "%" +filterNameProduct + "%");
@@ -177,5 +194,13 @@ public class ProductBean implements Serializable {
 
 	public void setFactorys(List<Factory> factorys) {
 		this.factorys = factorys;
+	}
+
+	public StreamedContent getStreamedContent() {
+		return streamedContent;
+	}
+
+	public void setStreamedContent(StreamedContent streamedContent) {
+		this.streamedContent = streamedContent;
 	}
 }

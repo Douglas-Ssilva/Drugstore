@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.junit.Ignore;
@@ -14,6 +15,7 @@ import br.com.drogaria.dao.CityDAO;
 import br.com.drogaria.dao.ClientDAO;
 import br.com.drogaria.dao.FactoryDAO;
 import br.com.drogaria.dao.JPAUtil;
+import br.com.drogaria.dao.MenuDAO;
 import br.com.drogaria.dao.PersonDAO;
 import br.com.drogaria.dao.ProductDAO;
 import br.com.drogaria.dao.StateDAO;
@@ -22,10 +24,12 @@ import br.com.drogaria.domain.CashRegister;
 import br.com.drogaria.domain.City;
 import br.com.drogaria.domain.Client;
 import br.com.drogaria.domain.Factory;
+import br.com.drogaria.domain.Menu;
 import br.com.drogaria.domain.Person;
 import br.com.drogaria.domain.Product;
 import br.com.drogaria.domain.State;
 import br.com.drogaria.domain.User;
+import br.com.drogaria.enumerations.TypeUSer;
 
 public class Teste {
 
@@ -40,8 +44,8 @@ public class Teste {
 	@Ignore
 	public void saveState() {
 		State state = new State();
-		state.setInitials("MG");
-		state.setName("Minas Gerais");
+		state.setInitials("TE");
+		state.setName("Teste");
 		new StateDAO().save(state);
 	}
 
@@ -72,16 +76,25 @@ public class Teste {
 	}
 
 	@Test
+//	@Ignore
 	public void testandoList() throws ParseException {
 //		CashRegister cashRegisterByDate = new CashRegisterDAO().getCashRegisterByDate(new SimpleDateFormat("dd/MM/yyyy").parse("15/09/2019"));
 //		System.out.println(cashRegisterByDate);
 		
 		
-		User user= new UserDAO().authentication("111.111.111-11", "admin"); //admin
-		System.out.println(user.getPerson().getName());
+//		User user= new UserDAO().authentication("111.111.111-11", "admin"); //admin
+//		System.out.println(user.getPerson().getName());
 //		SimpleHash simpleHash = new SimpleHash("md5", user.getPassword());
 //		user.setPassword(simpleHash.toHex());
 //		new UserDAO().merge(user);
+		
+		List<Menu> list = new MenuDAO().getAll();
+		for (Menu menu : list) {
+			
+			if(menu.getWayURL() == null) {
+				System.out.println(menu.getLabel());
+			}
+		}
 	}
 
 	@Test
@@ -125,13 +138,14 @@ public class Teste {
 	}
 	// 164
 
-	@Test@Ignore
+	@Test
+	@Ignore
 	public void user() {
 		User user = new User();
 		user.setActive(true);
 		user.setPassword("123");
-		user.setPerson(new PersonDAO().findById(11L));
-		user.setTypeUser('A');
+		user.setPerson(new PersonDAO().findById(40L));
+		user.setTypeUserEnum(TypeUSer.EMPLOYEE);
 		new UserDAO().save(user);
 	}
 	

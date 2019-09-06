@@ -45,14 +45,15 @@ public class UserAuthenticationBean implements Serializable {
 		}
 	}
 
+//	Foi realizada alteração de tipo character p Enum
 	public boolean havePermissions(List<String> permissions) { // Só aceita passar String
-		if (user.getTypeUser() != null) {
-			for (String p : permissions) {
-				if (user.getTypeUser() == p.charAt(0)) {
-					return true;
-				}
-			}
-		}
+//		if (user.getTypeUser() != null) {
+//			for (String p : permissions) {
+//				if (user.getTypeUser() == p.charAt(0)) {
+//					return true;
+//				}
+//			}
+//		}
 		return false;
 	}
 

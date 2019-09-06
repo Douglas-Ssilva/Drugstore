@@ -8,6 +8,7 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
 import org.apache.shiro.crypto.hash.SimpleHash;
+import org.omnifaces.util.Faces;
 import org.omnifaces.util.Messages;
 import org.primefaces.PrimeFaces;
 import org.primefaces.component.datatable.DataTable;
@@ -45,7 +46,7 @@ public class UserBean implements Serializable {
 			init();
 			verifyIfUpdate(user);
 			newUser();
-			Messages.addGlobalInfo("Successfully");
+			Messages.addGlobalInfo(Faces.getResourceBundle("msg").getString("messageSuccess")); //Usando o Omnifaces, passo a key do .properties
 		} catch (RuntimeException e) {
 			e.printStackTrace();
 			Messages.addGlobalError(e.getMessage());

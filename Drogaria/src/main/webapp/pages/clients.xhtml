@@ -30,7 +30,14 @@
 							<f:convertDateTime locale="pt_BR"/>
 						</h:outputText>
 					</p:column>
-					<p:column headerText="Released">
+					<p:column headerText="Released" filterBy="#{c.released}">
+						<f:facet name="filter">
+							<p:selectOneButton onchange="PF('dataClientW').filter();">
+								<f:selectItem itemValue="" itemLabel="All"/>
+								<f:selectItem itemValue="true" itemLabel="Yes"/>
+								<f:selectItem itemValue="false" itemLabel="Not"/>
+							</p:selectOneButton>
+						</f:facet>
 						<p:selectBooleanCheckbox value="#{c.released}" disabled="true" title="#{c.released}"/> 
 					</p:column>
 					<p:column headerText="Options">

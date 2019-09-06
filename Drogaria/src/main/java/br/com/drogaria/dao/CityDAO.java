@@ -1,5 +1,6 @@
 package br.com.drogaria.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -20,6 +21,19 @@ public class CityDAO extends GenericDAO<City>{
 		} finally {
 			entityManager.close();
 		}
+	}
+
+	//Usado via Service
+	public List<City> findByState(Long idState) {
+		EntityManager entityManager = JPAUtil.getEntityManager();
+		List<City> list= new ArrayList<>();
+		try {
+			list= entityManager.createQuery("SELECT C FROM City C WHERE C.state.id= :pState", City.class)
+			.setParameter("pState", idState).getResultList();
+		} catch (RuntimeException e) {
+			e.printStackTrace();
+		}
+		return list;
 	}
 
 }

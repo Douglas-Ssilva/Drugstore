@@ -25,7 +25,8 @@
 					</h:outputText>
 				</p:column>
 				<p:column headerText="Options">
-					     <p:commandButton icon="fa fa-cart-plus" actionListener="#{saleBean.addProductsToCart(p)}" update="formSale:dataShoppingCart message formSale:pnlSale"/>
+					     <p:commandButton icon="fa fa-cart-plus" actionListener="#{saleBean.addProductsToCart(p)}" 
+					     	update="formSale:dataShoppingCart message formSale:pnlSale"/>
 				</p:column>
 			</p:dataTable>
 		</p:panel>
@@ -34,7 +35,7 @@
 		
 		<p:panel header="Shopping Cart">
 			<p:dataTable id="dataShoppingCart" widgetVar="dataShoppingCartW" value="#{saleBean.sales}" var="s" emptyMessage="Not record found" 
-						paginator="true" rows="4" paginatorPosition="bottom">
+						paginator="true" rows="4" paginatorPosition="bottom" editable="true" editMode="cell">
 				<p:column headerText="Descrição">
 					<h:outputText value="#{s.product.name}" />
 				</p:column>
@@ -42,11 +43,21 @@
 					<h:outputText value="#{s.product.factory.name}" />
 				</p:column>
 				<p:column headerText="Quantity">
-					<h:outputText value="#{s.quantity}" />
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{s.quantity}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText value="#{s.quantity}">
+								<f:ajax listener="#{saleBean.calculateAmountWhenMakeDoubleClickInCell}" render="partialValue formSale:pnlSale"/>
+							</p:inputText>
+						</f:facet>
+					</p:cellEditor>
 				</p:column>
+				
 				<p:column headerText="Unitary Value">
 					<h:outputText value="R$ "/>
-					<h:outputText value="#{s.partialValue}">
+					<h:outputText id="partialValue" value="#{s.partialValue}">
 						<f:convertNumber locale="pt_BR" minFractionDigits="2"/>
 					</h:outputText>
 				</p:column>

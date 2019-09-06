@@ -106,6 +106,13 @@ public class SaleBean implements Serializable {
 		calculateAmount();
 		Messages.addGlobalInfo("Product successfully added to shopping cart");
 	}
+	
+	public void calculateAmountWhenMakeDoubleClickInCell() {
+		for (ItemSale s : sales) {
+			s.setPartialValue(s.getProduct().getPrice().multiply(new BigDecimal(s.getQuantity())));
+			calculateAmount();
+		}
+	}
 
 	private void calculateAmount() {
 		sale.setAmount(new BigDecimal("0.00")); //A fim de nao fazer calculo com objeto já calculado anteriormente
